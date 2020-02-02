@@ -1,12 +1,12 @@
 package com.pdfgenerator.gui;
 
 
-import com.pdfgenerator.model.GetQuestionByGET;
+import com.pdfgenerator.model.NetworkRequests;
+import com.pdfgenerator.model.QuestionData;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 
 public class GuiMain extends javax.swing.JFrame {
@@ -32,8 +32,8 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel answersToCheckCountLabel;
 
 
-    //ArrayList<Questions> zbiorPytan;
-   // Questions nowe;
+    QuestionData zbiorPytan;
+
     float wynik;
     int indeks;
     String yourAnswer = "";
@@ -88,7 +88,7 @@ public class GuiMain extends javax.swing.JFrame {
         }*/
     }
 
-    public GuiMain() {
+    public GuiMain()throws Exception {
         answerAButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -154,7 +154,17 @@ public class GuiMain extends javax.swing.JFrame {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GetQuestionByGET.getByGET(2);
+                try {
+                    zbiorPytan = NetworkRequests.getByGET(2);
+                    questionTextArea.setText(zbiorPytan.getQuestion());
+                    answerAButton.setText(zbiorPytan.getAnswers()[0]);
+                    answerBButton.setText(zbiorPytan.getAnswers()[1]);
+                    answerCButton.setText(zbiorPytan.getAnswers()[2]);
+                    answerDButton.setText(zbiorPytan.getAnswers()[3]);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+
                 questionTextArea.setVisible(true);
                 startGameButton.setVisible(false);
                 nextQuestionButton.setVisible(true);
@@ -185,7 +195,7 @@ public class GuiMain extends javax.swing.JFrame {
         });
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
        /* przyklad uzycia HTTP CLIENTA dla zadania typu POST
         System.out.println("Test metody POST: \n");

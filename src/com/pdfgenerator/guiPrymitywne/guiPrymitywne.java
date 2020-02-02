@@ -1,6 +1,6 @@
 package com.pdfgenerator.guiPrymitywne;
 
-import com.pdfgenerator.model.GetQuestionByGET;
+import com.pdfgenerator.model.NetworkRequests;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,11 @@ public class guiPrymitywne {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               GetQuestionByGET.getByGET(2);
+                try {
+                    NetworkRequests.getByGET(2);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

@@ -1,6 +1,8 @@
 package com.pdfgenerator.gui;
 
 
+import com.pdfgenerator.model.GetQuestionByGET;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -152,6 +154,7 @@ public class GuiMain extends javax.swing.JFrame {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                GetQuestionByGET.getByGET(2);
                 questionTextArea.setVisible(true);
                 startGameButton.setVisible(false);
                 nextQuestionButton.setVisible(true);

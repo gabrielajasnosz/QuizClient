@@ -32,7 +32,7 @@ public class NetworkRequests {
             final QuestionData files = gson.fromJson(json, type);
             System.out.println("Result - kod odpowiedzi serwera: " + response.getStatusLine().getStatusCode());
             if (response.getStatusLine().getStatusCode() == 200) {
-                System.out.printf("Pytanie: %s, Odpowiedzi %s Punkty %s czy ostatnie %b \n", files.getQuestion(), Arrays.toString(files.getAnswers()),files.getPoints(),files.isLastQuestion());
+              // wyswietl pobrane dane  System.out.printf("Pytanie: %s, Odpowiedzi %s Punkty %s czy ostatnie %b \n", files.getQuestion(), Arrays.toString(files.getAnswers()),files.getPoints(),files.isLastQuestion());
             }
             return files;
         }

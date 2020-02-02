@@ -1,6 +1,5 @@
 package com.pdfgenerator.gui;
 
-
 import com.pdfgenerator.model.NetworkRequests;
 import com.pdfgenerator.model.QuestionData;
 
@@ -26,7 +25,7 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel dLabel;
     private JLabel scoreLabel;
     private JLabel questionPriceLabel;
-    private JLabel isAnswerGood;
+    private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
 
@@ -34,8 +33,7 @@ public class GuiMain extends javax.swing.JFrame {
     QuestionData zbiorPytan;
 
     float wynik;
-    int indeks;
-    String yourAnswer = "";
+    String yourAnswer = ""; // to bylo do sprawdzania odpowiedzi
     int answersToCheckCount = 4;
     int id=1;
 
@@ -45,6 +43,14 @@ public class GuiMain extends javax.swing.JFrame {
         answerCButton.setEnabled(false);
         answerDButton.setEnabled(false);
     }
+
+    public void enableAnswerButtons() {
+        answerAButton.setEnabled(true);
+        answerBButton.setEnabled(true);
+        answerCButton.setEnabled(true);
+        answerDButton.setEnabled(true);
+    }
+
 
     public void showAnswerButtons() {
         answerAButton.setVisible(true);
@@ -61,13 +67,14 @@ public class GuiMain extends javax.swing.JFrame {
             answerBButton.setText(zbiorPytan.getAnswers()[1]);
             answerCButton.setText(zbiorPytan.getAnswers()[2]);
             answerDButton.setText(zbiorPytan.getAnswers()[3]);
+            questionPriceTextField.setText((zbiorPytan.getPoints()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     public void answerButtonClickAction(char letter) {
-        yourAnswer = yourAnswer + letter + ',';
+        yourAnswer = yourAnswer + letter + ',';//to bylo do sprawdzania odpowiedzi
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
             nextQuestionButton.setEnabled(true);
@@ -80,7 +87,8 @@ public class GuiMain extends javax.swing.JFrame {
         } else {
             System.out.println("Negative answersToCheckCount!!!");
         }
-       /* CheckAnswer checkAnswer = new CheckAnswer();
+       /* //!! sprawdzanie odpowiedzi na biezaco
+        CheckAnswer checkAnswer = new CheckAnswer();
         float countUsersGoodAnswersForCurrentQuestion = checkAnswer.checkAnswer(yourAnswer, zbiorPytan.get(indeks).getCorrectAnswers());
         if (countUsersGoodAnswersForCurrentQuestion != 0) {
             isAnswerGood.setText("Tak, dobrze!" + countUsersGoodAnswersForCurrentQuestion * 100 + "%");
@@ -127,23 +135,18 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                id++;
-                setNextQuestionTexts();
-
-              /*  if (indeks + 1 < zbiorPytan.size()) {
-                    indeks++;
-                    isAnswerGood.setText("");
-                    yourAnswer = "";
-                    nextQuestionButton.setEnabled(false);
-                    answerAButton.setEnabled(true);
-                    answerBButton.setEnabled(true);
-                    answerCButton.setEnabled(true);
-                    answerDButton.setEnabled(true);
-                    setNextQuestionTexts();
+              if (zbiorPytan.isLastQuestion()==false) {
+                  id++;
+                  setNextQuestionTexts();
+                  enableAnswerButtons();
+                  nextQuestionButton.setEnabled(false);
+                  answersToCheckCount=4;
                 } else {
                     nextQuestionButton.setEnabled(false);
-                    isAnswerGood.setText("KONIEC");
-                }*/
+                    gameOverLabel.setVisible(true);
+                    gameOverLabel.setText("KONIEC");
+                    disableAnswerButtons();
+                }
             }
         });
 
@@ -161,6 +164,7 @@ public class GuiMain extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setNextQuestionTexts();
+                wynik = 0;
 
                 questionTextArea.setVisible(true);
                 startGameButton.setVisible(false);
@@ -175,29 +179,15 @@ public class GuiMain extends javax.swing.JFrame {
                 scoreLabel.setVisible(true);
                 questionPriceLabel.setVisible(true);
                 endQuizButton.setVisible(true);
-                isAnswerGood.setVisible(true);
                 questionPriceTextField.setVisible(true);
 
 
-               // zbiorPytan = Streams.readData();
-
               //  System.out.println("Liczba przyjetych pytan to:" +zbiorPytan.size());
-                wynik = 0;
-                indeks = 0;
-
-                setNextQuestionTexts();
             }
         });
     }
 
     public static void main(String[] args) throws Exception {
-
-       /* przyklad uzycia HTTP CLIENTA dla zadania typu POST
-        System.out.println("Test metody POST: \n");
-        exampleHttpClientForPostMethod();
-        System.out.println();*/
-
-        // przyklad uzycia HTTP CLIENTA dla zadania typu GET
         JFrame GuiMain = new JFrame("GUI");
         GuiMain.setContentPane(new GuiMain().panel1);
         GuiMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

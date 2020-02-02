@@ -54,14 +54,16 @@ public class GuiMain extends javax.swing.JFrame {
     }
 
     public void setNextQuestionTexts() {
-     /*   questionTextArea.setText(zbiorPytan.get(indeks).getQuestionText());
-        answerAButton.setText(zbiorPytan.get(indeks).getAnswerA());
-        answerBButton.setText(zbiorPytan.get(indeks).getAnswerB());
-        answerCButton.setText(zbiorPytan.get(indeks).getAnswerC());
-        answerDButton.setText(zbiorPytan.get(indeks).getAnswerD());
-        questionPriceTextField.setText(zbiorPytan.get(indeks).getPoints());
-        answersToCheckCount = zbiorPytan.get(indeks).getCorrectAnswers().replaceAll(",", "").length();
-        answersToCheckCountTextField.setText(String.valueOf(answersToCheckCount));*/
+        try {
+            zbiorPytan = NetworkRequests.getByGET(id);
+            questionTextArea.setText(zbiorPytan.getQuestion());
+            answerAButton.setText(zbiorPytan.getAnswers()[0]);
+            answerBButton.setText(zbiorPytan.getAnswers()[1]);
+            answerCButton.setText(zbiorPytan.getAnswers()[2]);
+            answerDButton.setText(zbiorPytan.getAnswers()[3]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void answerButtonClickAction(char letter) {
@@ -125,6 +127,9 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                id++;
+                setNextQuestionTexts();
+
               /*  if (indeks + 1 < zbiorPytan.size()) {
                     indeks++;
                     isAnswerGood.setText("");
@@ -155,16 +160,7 @@ public class GuiMain extends javax.swing.JFrame {
         startGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    zbiorPytan = NetworkRequests.getByGET(id);
-                    questionTextArea.setText(zbiorPytan.getQuestion());
-                    answerAButton.setText(zbiorPytan.getAnswers()[0]);
-                    answerBButton.setText(zbiorPytan.getAnswers()[1]);
-                    answerCButton.setText(zbiorPytan.getAnswers()[2]);
-                    answerDButton.setText(zbiorPytan.getAnswers()[3]);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+                setNextQuestionTexts();
 
                 questionTextArea.setVisible(true);
                 startGameButton.setVisible(false);

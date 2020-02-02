@@ -37,6 +37,7 @@ public class GuiMain extends javax.swing.JFrame {
     int indeks;
     String yourAnswer = "";
     int answersToCheckCount = 4;
+    int id=1;
 
     public void disableAnswerButtons() {
         answerAButton.setEnabled(false);
@@ -67,9 +68,12 @@ public class GuiMain extends javax.swing.JFrame {
         yourAnswer = yourAnswer + letter + ',';
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
+            nextQuestionButton.setEnabled(true);
         } else if (answersToCheckCount == 1) {
             --answersToCheckCount;
             disableAnswerButtons();
+            nextQuestionButton.setEnabled(true);
+        }else if(answersToCheckCount == 3){
             nextQuestionButton.setEnabled(true);
         } else {
             System.out.println("Negative answersToCheckCount!!!");
@@ -152,7 +156,7 @@ public class GuiMain extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    zbiorPytan = NetworkRequests.getByGET(2);
+                    zbiorPytan = NetworkRequests.getByGET(id);
                     questionTextArea.setText(zbiorPytan.getQuestion());
                     answerAButton.setText(zbiorPytan.getAnswers()[0]);
                     answerBButton.setText(zbiorPytan.getAnswers()[1]);
@@ -177,7 +181,6 @@ public class GuiMain extends javax.swing.JFrame {
                 endQuizButton.setVisible(true);
                 isAnswerGood.setVisible(true);
                 questionPriceTextField.setVisible(true);
-
 
 
                // zbiorPytan = Streams.readData();

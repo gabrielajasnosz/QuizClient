@@ -1,5 +1,6 @@
 package com.pdfgenerator.gui;
 
+import com.pdfgenerator.model.AnswerData;
 import com.pdfgenerator.model.NetworkRequests;
 import com.pdfgenerator.model.QuestionData;
 
@@ -33,7 +34,7 @@ public class GuiMain extends javax.swing.JFrame {
     QuestionData zbiorPytan;
 
     float wynik;
-    String yourAnswer = ""; // to bylo do sprawdzania odpowiedzi
+    //TODO: Integer[] yourAnswer =new Integer[4]; // to bylo do sprawdzania odpowiedzi
     int answersToCheckCount = 4;
     int id=1;
 
@@ -74,7 +75,7 @@ public class GuiMain extends javax.swing.JFrame {
     }
 
     public void answerButtonClickAction(char letter) {
-        yourAnswer = yourAnswer + letter + ',';//to bylo do sprawdzania odpowiedzi
+     //   yourAnswer = yourAnswer + letter + ',';//to bylo do sprawdzania odpowiedzi
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
             nextQuestionButton.setEnabled(true);
@@ -136,11 +137,19 @@ public class GuiMain extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
               if (zbiorPytan.isLastQuestion()==false) {
+                  AnswerData myAnswers = new AnswerData();
+                  myAnswers.setQuestionId(id);
+                  myAnswers.setLastQuestion(zbiorPytan.isLastQuestion());
+                 //TODO myAnswers.setSelectedAnswersAnswers();
+
+
                   id++;
                   setNextQuestionTexts();
                   enableAnswerButtons();
                   nextQuestionButton.setEnabled(false);
                   answersToCheckCount=4;
+
+
                 } else {
                     nextQuestionButton.setEnabled(false);
                     gameOverLabel.setVisible(true);

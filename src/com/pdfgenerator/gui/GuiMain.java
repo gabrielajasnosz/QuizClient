@@ -28,8 +28,7 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel questionPriceLabel;
     private JLabel isAnswerGood;
     private JTextField questionPriceTextField;
-    private JTextField answersToCheckCountTextField;
-    private JLabel answersToCheckCountLabel;
+
 
 
     QuestionData zbiorPytan;
@@ -37,7 +36,7 @@ public class GuiMain extends javax.swing.JFrame {
     float wynik;
     int indeks;
     String yourAnswer = "";
-    int answersToCheckCount = 0;
+    int answersToCheckCount = 4;
 
     public void disableAnswerButtons() {
         answerAButton.setEnabled(false);
@@ -68,10 +67,8 @@ public class GuiMain extends javax.swing.JFrame {
         yourAnswer = yourAnswer + letter + ',';
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
-            answersToCheckCountTextField.setText(String.valueOf(answersToCheckCount));
         } else if (answersToCheckCount == 1) {
             --answersToCheckCount;
-            answersToCheckCountTextField.setText(String.valueOf(answersToCheckCount));
             disableAnswerButtons();
             nextQuestionButton.setEnabled(true);
         } else {
@@ -180,8 +177,7 @@ public class GuiMain extends javax.swing.JFrame {
                 endQuizButton.setVisible(true);
                 isAnswerGood.setVisible(true);
                 questionPriceTextField.setVisible(true);
-                answersToCheckCountLabel.setVisible(true);
-                answersToCheckCountTextField.setVisible(true);
+
 
 
                // zbiorPytan = Streams.readData();

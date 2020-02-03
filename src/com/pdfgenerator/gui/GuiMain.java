@@ -7,6 +7,7 @@ import com.pdfgenerator.model.QuestionData;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 
 public class GuiMain extends javax.swing.JFrame {
@@ -18,23 +19,18 @@ public class GuiMain extends javax.swing.JFrame {
     private JButton answerBButton;
     private JButton nextQuestionButton;
     private JButton endQuizButton;
-    private JTextField scoreTextField;
     private JButton startGameButton;
     private JLabel aLabel;
     private JLabel bLabel;
     private JLabel cLabel;
     private JLabel dLabel;
-    private JLabel scoreLabel;
     private JLabel questionPriceLabel;
     private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
-
-
     QuestionData zbiorPytan;
-
-    float wynik;
-    //TODO: Integer[] yourAnswer =new Integer[4]; // to bylo do sprawdzania odpowiedzi
+    Integer[] yourAnswer ={0,0,0,0};
+    int selectedAnswerIndex=0;
     int answersToCheckCount = 4;
     int id=1;
 
@@ -52,14 +48,6 @@ public class GuiMain extends javax.swing.JFrame {
         answerDButton.setEnabled(true);
     }
 
-
-    public void showAnswerButtons() {
-        answerAButton.setVisible(true);
-        answerBButton.setVisible(true);
-        answerCButton.setVisible(true);
-        answerDButton.setVisible(true);
-    }
-
     public void setNextQuestionTexts() {
         try {
             zbiorPytan = NetworkRequests.getByGET(id);
@@ -74,8 +62,9 @@ public class GuiMain extends javax.swing.JFrame {
         }
     }
 
-    public void answerButtonClickAction(char letter) {
-     //   yourAnswer = yourAnswer + letter + ',';//to bylo do sprawdzania odpowiedzi
+    public void answerButtonClickAction(int answerNumber) {
+        yourAnswer[selectedAnswerIndex]=answerNumber;
+        selectedAnswerIndex++;
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
             nextQuestionButton.setEnabled(true);
@@ -104,7 +93,7 @@ public class GuiMain extends javax.swing.JFrame {
         answerAButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                answerButtonClickAction('A');
+                answerButtonClickAction(1);
                 answerAButton.setEnabled(false);
             }
         });
@@ -112,7 +101,7 @@ public class GuiMain extends javax.swing.JFrame {
         answerBButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                answerButtonClickAction('B');
+                answerButtonClickAction(2);
                 answerBButton.setEnabled(false);
             }
         });
@@ -120,7 +109,7 @@ public class GuiMain extends javax.swing.JFrame {
         answerCButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                answerButtonClickAction('C');
+                answerButtonClickAction(3);
                 answerCButton.setEnabled(false);
             }
         });
@@ -128,7 +117,7 @@ public class GuiMain extends javax.swing.JFrame {
         answerDButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                answerButtonClickAction('D');
+                answerButtonClickAction(4);
                 answerDButton.setEnabled(false);
             }
         });
@@ -136,6 +125,14 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.print(yourAnswer[0]);
+                System.out.print(yourAnswer[1]);
+                System.out.print(yourAnswer[2]);
+                System.out.print(yourAnswer[3]);
+                selectedAnswerIndex=0;
+                for(int i = 0; i<yourAnswer.length;i++){
+                    yourAnswer[i]=0;
+                }
               if (zbiorPytan.isLastQuestion()==false) {
                   AnswerData myAnswers = new AnswerData();
                   myAnswers.setQuestionId(id);
@@ -148,8 +145,6 @@ public class GuiMain extends javax.swing.JFrame {
                   enableAnswerButtons();
                   nextQuestionButton.setEnabled(false);
                   answersToCheckCount=4;
-
-
                 } else {
                     nextQuestionButton.setEnabled(false);
                     gameOverLabel.setVisible(true);
@@ -162,7 +157,7 @@ public class GuiMain extends javax.swing.JFrame {
         endQuizButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int opcja = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zakonczyc gre z wynikiem: " + wynik, "Uwaga!", JOptionPane.YES_NO_OPTION);
+                int opcja = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zakonczyc gre ?", "Uwaga!", JOptionPane.YES_NO_OPTION);
                 if (opcja == 0) {
                     panel1.setVisible(false);
                 }
@@ -173,25 +168,21 @@ public class GuiMain extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setNextQuestionTexts();
-                wynik = 0;
-
                 questionTextArea.setVisible(true);
                 startGameButton.setVisible(false);
                 nextQuestionButton.setVisible(true);
                 nextQuestionButton.setEnabled(false);
-                showAnswerButtons();
-                scoreTextField.setVisible(true);
+                answerAButton.setVisible(true);
+                answerBButton.setVisible(true);
+                answerCButton.setVisible(true);
+                answerDButton.setVisible(true);
                 aLabel.setVisible(true);
                 bLabel.setVisible(true);
                 cLabel.setVisible(true);
                 dLabel.setVisible(true);
-                scoreLabel.setVisible(true);
                 questionPriceLabel.setVisible(true);
                 endQuizButton.setVisible(true);
                 questionPriceTextField.setVisible(true);
-
-
-              //  System.out.println("Liczba przyjetych pytan to:" +zbiorPytan.size());
             }
         });
     }

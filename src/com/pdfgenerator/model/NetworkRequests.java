@@ -27,12 +27,12 @@ public class NetworkRequests {
             final HttpEntity entity = response.getEntity();
             // Na tym etapie odczytujemy JSON'a, ale jako String.
             final String json = EntityUtils.toString(entity);
-            final Type type = new TypeToken<QuestionData>() {
-            }.getType();
+            final Type type = new TypeToken<QuestionData>() {}.getType();
             final QuestionData files = gson.fromJson(json, type);
+            System.out.println("");
             System.out.println("Result - kod odpowiedzi serwera: " + response.getStatusLine().getStatusCode());
             if (response.getStatusLine().getStatusCode() == 200) {
-              // wyswietl pobrane dane  System.out.printf("Pytanie: %s, Odpowiedzi %s Punkty %s czy ostatnie %b \n", files.getQuestion(), Arrays.toString(files.getAnswers()),files.getPoints(),files.isLastQuestion());
+             //wyswietl pobrane pytanie System.out.printf("Pytanie: %s, Odpowiedzi %s Punkty %s czy ostatnie %b \n", files.getQuestion(), Arrays.toString(files.getAnswers()),files.getPoints(),files.isLastQuestion());
             }
             return files;
         }

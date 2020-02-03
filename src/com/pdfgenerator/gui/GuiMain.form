@@ -55,38 +55,6 @@
           <visible value="false"/>
         </properties>
       </component>
-      <component id="acc03" class="javax.swing.JButton" binding="endQuizButton">
-        <constraints>
-          <grid row="5" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Zakończ"/>
-          <visible value="false"/>
-        </properties>
-      </component>
-      <component id="f76b" class="javax.swing.JLabel" binding="scoreLabel">
-        <constraints>
-          <grid row="6" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="6" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <enabled value="true"/>
-          <text value="Wynik:"/>
-          <visible value="false"/>
-        </properties>
-      </component>
-      <component id="a90dc" class="javax.swing.JTextField" binding="scoreTextField">
-        <constraints>
-          <grid row="7" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <editable value="false"/>
-          <enabled value="true"/>
-          <text value="0"/>
-          <visible value="false"/>
-        </properties>
-      </component>
       <component id="90d2" class="javax.swing.JButton" binding="nextQuestionButton">
         <constraints>
           <grid row="4" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -203,6 +171,17 @@
         <properties>
           <editable value="false"/>
           <enabled value="true"/>
+          <visible value="false"/>
+        </properties>
+      </component>
+      <component id="acc03" class="javax.swing.JButton" binding="endQuizButton">
+        <constraints>
+          <grid row="7" column="3" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Zakończ"/>
+          <verticalAlignment value="0"/>
+          <verticalTextPosition value="0"/>
           <visible value="false"/>
         </properties>
       </component>

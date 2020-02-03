@@ -72,6 +72,8 @@ public class NetworkRequests {
             else if (response.getStatusLine().getStatusCode() == 200)
             {
                 System.err.println("Gitara jest #200");
+                System.out.println("polecialy dane ");
+                System.out.println(answers.getSelectedAnswers());
             }
 
             client.close();

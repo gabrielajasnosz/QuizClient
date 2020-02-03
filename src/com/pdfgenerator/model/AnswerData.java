@@ -20,7 +20,15 @@ public class AnswerData implements Serializable {
         this.selectedAnswers = selectedAnswers;
     }
 
-    public boolean getLastQuestion() {
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
+
+    public boolean isLastQuestion() {
         return lastQuestion;
     }
 
@@ -32,16 +40,8 @@ public class AnswerData implements Serializable {
         return selectedAnswers;
     }
 
-    public void setSelectedAnswers(String answers) {
+    public void setSelectedAnswers(String selectedAnswers) {
         this.selectedAnswers = selectedAnswers;
-    }
-
-    public int getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(int questionId) {
-        this.questionId=questionId;
     }
 
     @Override

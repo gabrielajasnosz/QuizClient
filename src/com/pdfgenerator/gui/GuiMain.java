@@ -27,6 +27,7 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
+    AnswerData dataAnswer= new AnswerData();
     QuestionData zbiorPytan;
     String yourAnswer = "";
     int answersToCheckCount = 4;
@@ -123,19 +124,21 @@ public class GuiMain extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO:
-                AnswerData dataanswer= new AnswerData();
+
              //  dataanswer.setSelectedAnswers(yourAnswer.);
               //  System.out.print(dataanswer.getSelectedAnswers());
 
-
                 System.out.println(yourAnswer);
-                yourAnswer="";
 
               if (zbiorPytan.isLastQuestion()==false) {
-                  AnswerData myAnswers = new AnswerData();
-                  myAnswers.setQuestionId(id);
-                  myAnswers.setLastQuestion(zbiorPytan.isLastQuestion());
-
+                  dataAnswer.setQuestionId(id);
+                  dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
+                  dataAnswer.setSelectedAnswers(yourAnswer);
+                  try {
+                      NetworkRequests.answerData(dataAnswer);
+                  } catch (Exception ex) {
+                      ex.printStackTrace();
+                  }
                   id++;
                   setNextQuestionTexts();
                   enableAnswerButtons();
@@ -147,6 +150,7 @@ public class GuiMain extends javax.swing.JFrame {
                     gameOverLabel.setText("KONIEC");
                     disableAnswerButtons();
                 }
+                yourAnswer="";
             }
         });
 

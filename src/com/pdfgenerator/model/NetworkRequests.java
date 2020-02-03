@@ -38,7 +38,8 @@ public class NetworkRequests {
             final Type type = new TypeToken<QuestionData>() {}.getType();
             final QuestionData files = gson.fromJson(json, type);
             System.out.println("");
-            System.out.println("Result - kod odpowiedzi serwera: " + response.getStatusLine().getStatusCode());
+            System.out.println("");
+            System.out.println("Pobranie danych - kod odpowiedzi serwera: " + response.getStatusLine().getStatusCode());
             if (response.getStatusLine().getStatusCode() == 200) {
              //wyswietl pobrane pytanie System.out.printf("Pytanie: %s, Odpowiedzi %s Punkty %s czy ostatnie %b \n", files.getQuestion(), Arrays.toString(files.getAnswers()),files.getPoints(),files.isLastQuestion());
             }
@@ -72,8 +73,9 @@ public class NetworkRequests {
             else if (response.getStatusLine().getStatusCode() == 200)
             {
                 System.err.println("Gitara jest #200");
-                System.out.println("polecialy dane ");
-                System.out.println(Arrays.toString(answers.getSelectedAnswers()));
+                System.out.print("polecialy dane: id ");
+                System.out.print(answers.getQuestionId()+ ",");
+                System.out.print(" odpowiedzi:" + Arrays.toString(answers.getSelectedAnswers()));
             }
 
             client.close();

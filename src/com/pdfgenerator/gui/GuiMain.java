@@ -134,8 +134,6 @@ public class GuiMain extends javax.swing.JFrame {
                     dataAnswer.setQuestionId(id);
                     dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
                     dataAnswer.setSelectedAnswers(yourAnswerIntArray);
-
-
                     try {
                         NetworkRequests.answerData(dataAnswer);
                     } catch (Exception ex) {
@@ -146,7 +144,23 @@ public class GuiMain extends javax.swing.JFrame {
                     enableAnswerButtons();
                     nextQuestionButton.setEnabled(false);
                     answersToCheckCount = 4;
-                } else {
+
+                } else {//TODO: powielenie kodu- do poprawienia?
+                    Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
+                    char[] yourAnswerCharArray = yourAnswer.toCharArray();
+                    for (int i = 0; i < yourAnswer.length(); i++) {
+                        yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
+                    }
+
+                    dataAnswer.setQuestionId(id);
+                    dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
+                    dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+                    try {
+                        NetworkRequests.answerData(dataAnswer);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
                     nextQuestionButton.setEnabled(false);
                     gameOverLabel.setVisible(true);
                     gameOverLabel.setText("KONIEC");

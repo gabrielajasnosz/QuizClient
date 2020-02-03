@@ -73,7 +73,7 @@ public class NetworkRequests {
             {
                 System.err.println("Gitara jest #200");
                 System.out.println("polecialy dane ");
-                System.out.println(answers.getSelectedAnswers());
+                System.out.println(Arrays.toString(answers.getSelectedAnswers()));
             }
 
             client.close();

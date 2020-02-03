@@ -8,13 +8,13 @@ public class AnswerData implements Serializable {
 
     private int questionId;
     private boolean lastQuestion;
-    private String selectedAnswers;
+    private Integer[] selectedAnswers;
 
     public AnswerData() {
     }
 
 
-    public AnswerData(int questionId, boolean lastQuestion, String selectedAnswers) {
+    public AnswerData(int questionId, boolean lastQuestion, Integer[] selectedAnswers) {
         this.questionId=questionId;
         this.lastQuestion = lastQuestion;
         this.selectedAnswers = selectedAnswers;
@@ -36,11 +36,11 @@ public class AnswerData implements Serializable {
         this.lastQuestion = lastQuestion;
     }
 
-    public String getSelectedAnswers() {
+    public Integer[] getSelectedAnswers() {
         return selectedAnswers;
     }
 
-    public void setSelectedAnswers(String selectedAnswers) {
+    public void setSelectedAnswers(Integer[] selectedAnswers) {
         this.selectedAnswers = selectedAnswers;
     }
 
@@ -49,7 +49,7 @@ public class AnswerData implements Serializable {
         return "{\"AnswerData\":{"
                 + "\"questionId\":\"" + questionId + "\""
                 + ", \"lastQuestion\":\"" + lastQuestion + "\""
-                + ", \"selectedAnswers\":\"" + selectedAnswers + "\""
+                + ", \"selectedAnswers\":\"" + Arrays.toString(selectedAnswers) + "\""
                 + "}}";
     }
 }

@@ -7,6 +7,7 @@ import com.pdfgenerator.model.QuestionData;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 
 public class GuiMain extends javax.swing.JFrame {
@@ -123,17 +124,19 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO:
-
-             //  dataanswer.setSelectedAnswers(yourAnswer.);
-              //  System.out.print(dataanswer.getSelectedAnswers());
-
-                System.out.println(yourAnswer);
-
               if (zbiorPytan.isLastQuestion()==false) {
+                  Integer [] yourAnswerIntArray = new Integer [yourAnswer.length()];
+                  char[] yourAnswerCharArray= yourAnswer.toCharArray();
+                  for(int i=0; i<yourAnswer.length(); i++) {
+                      yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
+                  }
+
                   dataAnswer.setQuestionId(id);
                   dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
-                  dataAnswer.setSelectedAnswers(yourAnswer);
+                  dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+
+
+
                   try {
                       NetworkRequests.answerData(dataAnswer);
                   } catch (Exception ex) {

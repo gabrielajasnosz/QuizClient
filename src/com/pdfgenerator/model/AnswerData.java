@@ -32,7 +32,7 @@ public class AnswerData implements Serializable {
         return selectedAnswers;
     }
 
-    public void setSelectedAnswersAnswers(Integer[] answers) {
+    public void setSelectedAnswers(Integer[] answers) {
         this.selectedAnswers = selectedAnswers;
     }
 
@@ -48,7 +48,7 @@ public class AnswerData implements Serializable {
     public String toString() {
         return "{\"AnswerData\":{"
                 + ", \"questionId\":\"" + questionId + "\""
-              + ", \"selectedAnswers\":" + Arrays.toString(selectedAnswers).replaceAll("0","") //TODO:?
+              + ", \"selectedAnswers\":" + Arrays.toString(selectedAnswers) //TODO:?
                 + ", \"lastQuestion\":\"" + lastQuestion + "\""
                 + "}}";
     }

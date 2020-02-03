@@ -7,16 +7,15 @@ import com.pdfgenerator.model.QuestionData;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 
 public class GuiMain extends javax.swing.JFrame {
     private JTextField questionTextArea;
     public JPanel panel1;
-    public JButton answerAButton;
-    private JButton answerDButton;
-    private JButton answerCButton;
-    private JButton answerBButton;
+    public JButton answer1Button;
+    private JButton answer4Button;
+    private JButton answer3Button;
+    private JButton answer2Button;
     private JButton nextQuestionButton;
     private JButton endQuizButton;
     private JButton startGameButton;
@@ -29,33 +28,32 @@ public class GuiMain extends javax.swing.JFrame {
     private JTextField questionPriceTextField;
 
     QuestionData zbiorPytan;
-    Integer[] yourAnswer ={0,0,0,0};
-    int selectedAnswerIndex=0;
+    String yourAnswer = "";
     int answersToCheckCount = 4;
     int id=1;
 
     public void disableAnswerButtons() {
-        answerAButton.setEnabled(false);
-        answerBButton.setEnabled(false);
-        answerCButton.setEnabled(false);
-        answerDButton.setEnabled(false);
+        answer1Button.setEnabled(false);
+        answer2Button.setEnabled(false);
+        answer3Button.setEnabled(false);
+        answer4Button.setEnabled(false);
     }
 
     public void enableAnswerButtons() {
-        answerAButton.setEnabled(true);
-        answerBButton.setEnabled(true);
-        answerCButton.setEnabled(true);
-        answerDButton.setEnabled(true);
+        answer1Button.setEnabled(true);
+        answer2Button.setEnabled(true);
+        answer3Button.setEnabled(true);
+        answer4Button.setEnabled(true);
     }
 
     public void setNextQuestionTexts() {
         try {
             zbiorPytan = NetworkRequests.getByGET(id);
             questionTextArea.setText(zbiorPytan.getQuestion());
-            answerAButton.setText(zbiorPytan.getAnswers()[0]);
-            answerBButton.setText(zbiorPytan.getAnswers()[1]);
-            answerCButton.setText(zbiorPytan.getAnswers()[2]);
-            answerDButton.setText(zbiorPytan.getAnswers()[3]);
+            answer1Button.setText(zbiorPytan.getAnswers()[0]);
+            answer2Button.setText(zbiorPytan.getAnswers()[1]);
+            answer3Button.setText(zbiorPytan.getAnswers()[2]);
+            answer4Button.setText(zbiorPytan.getAnswers()[3]);
             questionPriceTextField.setText((zbiorPytan.getPoints()));
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -63,8 +61,7 @@ public class GuiMain extends javax.swing.JFrame {
     }
 
     public void answerButtonClickAction(int answerNumber) {
-        yourAnswer[selectedAnswerIndex]=answerNumber;
-        selectedAnswerIndex++;
+        yourAnswer = yourAnswer + answerNumber;
         if (answersToCheckCount > 1) {
             --answersToCheckCount;
             nextQuestionButton.setEnabled(true);
@@ -90,35 +87,35 @@ public class GuiMain extends javax.swing.JFrame {
     }
 
     public GuiMain()throws Exception {
-        answerAButton.addActionListener(new ActionListener() {
+        answer1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 answerButtonClickAction(1);
-                answerAButton.setEnabled(false);
+                answer1Button.setEnabled(false);
             }
         });
 
-        answerBButton.addActionListener(new ActionListener() {
+        answer2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 answerButtonClickAction(2);
-                answerBButton.setEnabled(false);
+                answer2Button.setEnabled(false);
             }
         });
 
-        answerCButton.addActionListener(new ActionListener() {
+        answer3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 answerButtonClickAction(3);
-                answerCButton.setEnabled(false);
+                answer3Button.setEnabled(false);
             }
         });
 
-        answerDButton.addActionListener(new ActionListener() {
+        answer4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 answerButtonClickAction(4);
-                answerDButton.setEnabled(false);
+                answer4Button.setEnabled(false);
             }
         });
 
@@ -127,14 +124,13 @@ public class GuiMain extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 //TODO:
                 AnswerData dataanswer= new AnswerData();
-                dataanswer.setSelectedAnswersAnswers(yourAnswer);
-                System.out.print(dataanswer.getSelectedAnswers());
+             //  dataanswer.setSelectedAnswers(yourAnswer.);
+              //  System.out.print(dataanswer.getSelectedAnswers());
 
 
-                selectedAnswerIndex=0;
-                for(int i = 0; i<yourAnswer.length;i++){
-                    yourAnswer[i]=0;
-                }
+                System.out.println(yourAnswer);
+                yourAnswer="";
+
               if (zbiorPytan.isLastQuestion()==false) {
                   AnswerData myAnswers = new AnswerData();
                   myAnswers.setQuestionId(id);
@@ -172,10 +168,10 @@ public class GuiMain extends javax.swing.JFrame {
                 startGameButton.setVisible(false);
                 nextQuestionButton.setVisible(true);
                 nextQuestionButton.setEnabled(false);
-                answerAButton.setVisible(true);
-                answerBButton.setVisible(true);
-                answerCButton.setVisible(true);
-                answerDButton.setVisible(true);
+                answer1Button.setVisible(true);
+                answer2Button.setVisible(true);
+                answer3Button.setVisible(true);
+                answer4Button.setVisible(true);
                 aLabel.setVisible(true);
                 bLabel.setVisible(true);
                 cLabel.setVisible(true);

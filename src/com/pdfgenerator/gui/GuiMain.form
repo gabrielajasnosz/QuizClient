@@ -19,7 +19,7 @@
       <color color="-4473925"/>
     </border>
     <children>
-      <component id="1ac41" class="javax.swing.JButton" binding="answerAButton">
+      <component id="1ac41" class="javax.swing.JButton" binding="answer1Button">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -28,7 +28,7 @@
           <visible value="false"/>
         </properties>
       </component>
-      <component id="1f409" class="javax.swing.JButton" binding="answerBButton">
+      <component id="1f409" class="javax.swing.JButton" binding="answer2Button">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -37,7 +37,7 @@
           <visible value="false"/>
         </properties>
       </component>
-      <component id="b9401" class="javax.swing.JButton" binding="answerCButton">
+      <component id="b9401" class="javax.swing.JButton" binding="answer3Button">
         <constraints>
           <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -46,7 +46,7 @@
           <visible value="false"/>
         </properties>
       </component>
-      <component id="858ed" class="javax.swing.JButton" binding="answerDButton">
+      <component id="858ed" class="javax.swing.JButton" binding="answer4Button">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>

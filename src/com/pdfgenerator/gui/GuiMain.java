@@ -32,7 +32,7 @@ public class GuiMain extends javax.swing.JFrame {
     QuestionData zbiorPytan;
     String yourAnswer = "";
     int answersToCheckCount = 4;
-    int id = 1;
+    int id = 0;
 
     public void disableAnswerButtons() {
         answer1Button.setEnabled(false);

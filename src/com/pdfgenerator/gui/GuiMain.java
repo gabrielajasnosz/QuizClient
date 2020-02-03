@@ -162,6 +162,7 @@ public class GuiMain extends javax.swing.JFrame {
                     dataAnswer.setQuestionId(id);
                     dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
                     dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+                    lista.add(dataAnswer);
                     try {
                         NetworkRequests.answerData(dataAnswer);
                     } catch (Exception ex) {

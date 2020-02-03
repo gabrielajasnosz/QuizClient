@@ -125,10 +125,12 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.print(yourAnswer[0]);
-                System.out.print(yourAnswer[1]);
-                System.out.print(yourAnswer[2]);
-                System.out.print(yourAnswer[3]);
+                //TODO:
+                AnswerData dataanswer= new AnswerData();
+                dataanswer.setSelectedAnswersAnswers(yourAnswer);
+                System.out.print(dataanswer.getSelectedAnswers());
+
+
                 selectedAnswerIndex=0;
                 for(int i = 0; i<yourAnswer.length;i++){
                     yourAnswer[i]=0;
@@ -137,8 +139,6 @@ public class GuiMain extends javax.swing.JFrame {
                   AnswerData myAnswers = new AnswerData();
                   myAnswers.setQuestionId(id);
                   myAnswers.setLastQuestion(zbiorPytan.isLastQuestion());
-                 //TODO myAnswers.setSelectedAnswersAnswers();
-
 
                   id++;
                   setNextQuestionTexts();

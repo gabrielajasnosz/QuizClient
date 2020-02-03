@@ -28,7 +28,7 @@ public class AnswerData implements Serializable {
         this.lastQuestion = lastQuestion;
     }
 
-    public Integer[] getSelectedAnswersAnswers() {
+    public Integer[] getSelectedAnswers() {
         return selectedAnswers;
     }
 
@@ -48,7 +48,7 @@ public class AnswerData implements Serializable {
     public String toString() {
         return "{\"AnswerData\":{"
                 + ", \"questionId\":\"" + questionId + "\""
-                + ", \"selectedAnswers\":" + Arrays.toString(selectedAnswers)
+              + ", \"selectedAnswers\":" + Arrays.toString(selectedAnswers).replaceAll("0","") //TODO:?
                 + ", \"lastQuestion\":\"" + lastQuestion + "\""
                 + "}}";
     }

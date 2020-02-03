@@ -3,11 +3,14 @@ package com.pdfgenerator.gui;
 import com.pdfgenerator.model.AnswerData;
 import com.pdfgenerator.model.NetworkRequests;
 import com.pdfgenerator.model.QuestionData;
+import sun.nio.ch.Net;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class GuiMain extends javax.swing.JFrame {
@@ -28,6 +31,7 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
+    ArrayList<AnswerData> lista = new ArrayList<AnswerData>();
     AnswerData dataAnswer = new AnswerData();
     QuestionData zbiorPytan;
     String yourAnswer = "";
@@ -130,12 +134,12 @@ public class GuiMain extends javax.swing.JFrame {
                     for (int i = 0; i < yourAnswer.length(); i++) {
                         yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
                     }
-
                     dataAnswer.setQuestionId(id);
                     dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
                     dataAnswer.setSelectedAnswers(yourAnswerIntArray);
                     try {
                         NetworkRequests.answerData(dataAnswer);
+                        lista.add(dataAnswer);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -175,7 +179,13 @@ public class GuiMain extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 int opcja = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zakonczyc gre ?", "Uwaga!", JOptionPane.YES_NO_OPTION);
                 if (opcja == 0) {
+                    try {
+                        NetworkRequests.answerDataList(lista);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     panel1.setVisible(false);
+
                 }
             }
         });

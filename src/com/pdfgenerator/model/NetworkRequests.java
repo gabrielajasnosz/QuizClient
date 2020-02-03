@@ -19,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class NetworkRequests {
@@ -52,7 +53,6 @@ public class NetworkRequests {
     }
 
     public static void answerData(final AnswerData answers) throws Exception{
-
         final CloseableHttpClient client = HttpClients.createDefault();
         final HttpPut httpPut = new HttpPut("http://127.0.0.1:8080/quiz/calculate");
         Gson gson = new Gson();
@@ -76,6 +76,45 @@ public class NetworkRequests {
                 System.out.print("polecialy dane: id ");
                 System.out.print(answers.getQuestionId()+ ",");
                 System.out.print(" odpowiedzi:" + Arrays.toString(answers.getSelectedAnswers()));
+            }
+
+            client.close();
+        } catch (UnsupportedEncodingException e) {
+
+            System.out.println("Houston, we have a problem with POST unsupported encoding");
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+
+            System.out.println("Houston, we have a problem with POST client protocol");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Houston, we have a problem with POST input output");
+            e.printStackTrace();
+        }
+    }
+    public static void answerDataList(final ArrayList<AnswerData> answers) throws Exception{
+        final CloseableHttpClient client = HttpClients.createDefault();
+        final HttpPost httpPost = new HttpPost("http://127.0.0.1:8080/quiz/report");
+        Gson gson = new Gson();
+        // Serializacja obiektu do JSONa
+        final String json = gson.toJson(answers);
+        try {
+            final StringEntity entity = new StringEntity(json);
+            httpPost.setEntity(entity);
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+            final CloseableHttpResponse response = client.execute(httpPost);
+            System.out.println("answerDataList - kod odpowiedzi serwera: " + response.getStatusLine().getStatusCode());
+
+            if (response.getStatusLine().getStatusCode() == 400)
+            {
+                System.err.println("#BLAD 400");
+            }
+            else if (response.getStatusLine().getStatusCode() == 200)
+            {
+                System.err.println("Lista poszla jest #200");
+                System.out.print(answers.get(0).getQuestionId()+ ",");
+                System.out.print(" odpowiedzi:" + Arrays.toString(answers.get(0).getSelectedAnswers()));
             }
 
             client.close();

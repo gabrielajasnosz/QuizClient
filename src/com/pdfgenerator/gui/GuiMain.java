@@ -32,7 +32,7 @@ public class GuiMain extends javax.swing.JFrame {
     private JTextField questionPriceTextField;
 
     ArrayList<AnswerData> lista = new ArrayList<AnswerData>();
-    AnswerData dataAnswer = new AnswerData();
+
     QuestionData zbiorPytan;
     String yourAnswer = "";
     int answersToCheckCount = 4;
@@ -128,6 +128,7 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                AnswerData dataAnswer = new AnswerData();
                 if (zbiorPytan.isLastQuestion() == false) {
                     Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
                     char[] yourAnswerCharArray = yourAnswer.toCharArray();
@@ -137,9 +138,11 @@ public class GuiMain extends javax.swing.JFrame {
                     dataAnswer.setQuestionId(id);
                     dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
                     dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+                    lista.add(dataAnswer);
                     try {
+
                         NetworkRequests.answerData(dataAnswer);
-                        lista.add(dataAnswer);
+
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

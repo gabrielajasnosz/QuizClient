@@ -28,11 +28,11 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
-    AnswerData dataAnswer= new AnswerData();
+    AnswerData dataAnswer = new AnswerData();
     QuestionData zbiorPytan;
     String yourAnswer = "";
     int answersToCheckCount = 4;
-    int id=1;
+    int id = 1;
 
     public void disableAnswerButtons() {
         answer1Button.setEnabled(false);
@@ -71,7 +71,7 @@ public class GuiMain extends javax.swing.JFrame {
             --answersToCheckCount;
             disableAnswerButtons();
             nextQuestionButton.setEnabled(true);
-        }else if(answersToCheckCount == 3){
+        } else if (answersToCheckCount == 3) {
             nextQuestionButton.setEnabled(true);
         } else {
             System.out.println("Negative answersToCheckCount!!!");
@@ -88,7 +88,7 @@ public class GuiMain extends javax.swing.JFrame {
         }*/
     }
 
-    public GuiMain()throws Exception {
+    public GuiMain() throws Exception {
         answer1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,36 +124,35 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              if (zbiorPytan.isLastQuestion()==false) {
-                  Integer [] yourAnswerIntArray = new Integer [yourAnswer.length()];
-                  char[] yourAnswerCharArray= yourAnswer.toCharArray();
-                  for(int i=0; i<yourAnswer.length(); i++) {
-                      yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
-                  }
+                if (zbiorPytan.isLastQuestion() == false) {
+                    Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
+                    char[] yourAnswerCharArray = yourAnswer.toCharArray();
+                    for (int i = 0; i < yourAnswer.length(); i++) {
+                        yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
+                    }
 
-                  dataAnswer.setQuestionId(id);
-                  dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
-                  dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+                    dataAnswer.setQuestionId(id);
+                    dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
+                    dataAnswer.setSelectedAnswers(yourAnswerIntArray);
 
 
-
-                  try {
-                      NetworkRequests.answerData(dataAnswer);
-                  } catch (Exception ex) {
-                      ex.printStackTrace();
-                  }
-                  id++;
-                  setNextQuestionTexts();
-                  enableAnswerButtons();
-                  nextQuestionButton.setEnabled(false);
-                  answersToCheckCount=4;
+                    try {
+                        NetworkRequests.answerData(dataAnswer);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                    id++;
+                    setNextQuestionTexts();
+                    enableAnswerButtons();
+                    nextQuestionButton.setEnabled(false);
+                    answersToCheckCount = 4;
                 } else {
                     nextQuestionButton.setEnabled(false);
                     gameOverLabel.setVisible(true);
                     gameOverLabel.setText("KONIEC");
                     disableAnswerButtons();
                 }
-                yourAnswer="";
+                yourAnswer = "";
             }
         });
 

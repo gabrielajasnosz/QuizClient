@@ -15,7 +15,7 @@ public class AnswerData implements Serializable {
 
 
     public AnswerData(int questionId, boolean lastQuestion, Integer[] selectedAnswers) {
-        this.questionId=questionId;
+        this.questionId = questionId;
         this.lastQuestion = lastQuestion;
         this.selectedAnswers = selectedAnswers;
     }

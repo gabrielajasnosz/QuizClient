@@ -143,8 +143,8 @@ public class QuizGui extends javax.swing.JFrame {
                     answersToCheckCount = 4;
                 } else {
                     sendYourAnswer(id, yourAnswer);
-                    nextQuestionButton.setVisible(false);
-                    gameOverLabel.setVisible(true);
+                    nextQuestionButton.setText("No more questions");
+                    nextQuestionButton.setEnabled(false);
                     disableAnswerButtons();
                 }
                 yourAnswer = "";

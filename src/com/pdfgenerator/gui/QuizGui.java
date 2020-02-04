@@ -191,10 +191,22 @@ public class QuizGui extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) throws Exception {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel"); //Windows Look and feel
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
         JFrame GuiMain = new JFrame("Quiz");
         GuiMain.setContentPane(new QuizGui().panel1);
         GuiMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GuiMain.pack();
         GuiMain.setVisible(true);
+
     }
 }

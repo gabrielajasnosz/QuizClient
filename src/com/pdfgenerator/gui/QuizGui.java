@@ -3,17 +3,14 @@ package com.pdfgenerator.gui;
 import com.pdfgenerator.model.AnswerData;
 import com.pdfgenerator.model.NetworkRequests;
 import com.pdfgenerator.model.QuestionData;
-import sun.nio.ch.Net;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
-public class GuiMain extends javax.swing.JFrame {
+public class QuizGui extends javax.swing.JFrame {
     private JTextField questionTextArea;
     public JPanel panel1;
     public JButton answer1Button;
@@ -31,9 +28,8 @@ public class GuiMain extends javax.swing.JFrame {
     private JLabel gameOverLabel;
     private JTextField questionPriceTextField;
 
-    ArrayList<AnswerData> lista = new ArrayList<AnswerData>();
-
-    QuestionData zbiorPytan;
+    ArrayList<AnswerData> list = new ArrayList<AnswerData>();
+    QuestionData questionsCollection;
     String yourAnswer = "";
     int answersToCheckCount = 4;
     int id = 0;
@@ -54,13 +50,13 @@ public class GuiMain extends javax.swing.JFrame {
 
     public void setNextQuestionTexts() {
         try {
-            zbiorPytan = NetworkRequests.getByGET(id);
-            questionTextArea.setText(zbiorPytan.getQuestion());
-            answer1Button.setText(zbiorPytan.getAnswers()[0]);
-            answer2Button.setText(zbiorPytan.getAnswers()[1]);
-            answer3Button.setText(zbiorPytan.getAnswers()[2]);
-            answer4Button.setText(zbiorPytan.getAnswers()[3]);
-            questionPriceTextField.setText((zbiorPytan.getPoints()));
+            questionsCollection = NetworkRequests.getByGET(id);
+            questionTextArea.setText(questionsCollection.getQuestion());
+            answer1Button.setText(questionsCollection.getAnswers()[0]);
+            answer2Button.setText(questionsCollection.getAnswers()[1]);
+            answer3Button.setText(questionsCollection.getAnswers()[2]);
+            answer4Button.setText(questionsCollection.getAnswers()[3]);
+            questionPriceTextField.setText((questionsCollection.getPoints()));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -80,19 +76,28 @@ public class GuiMain extends javax.swing.JFrame {
         } else {
             System.out.println("Negative answersToCheckCount!!!");
         }
-       /* //!! sprawdzanie odpowiedzi na biezaco
-        CheckAnswer checkAnswer = new CheckAnswer();
-        float countUsersGoodAnswersForCurrentQuestion = checkAnswer.checkAnswer(yourAnswer, zbiorPytan.get(indeks).getCorrectAnswers());
-        if (countUsersGoodAnswersForCurrentQuestion != 0) {
-            isAnswerGood.setText("Tak, dobrze!" + countUsersGoodAnswersForCurrentQuestion * 100 + "%");
-            wynik = wynik + ((Float.parseFloat(zbiorPytan.get(indeks).getPoints()) / zbiorPytan.get(indeks).getCorrectAnswers().replaceAll(",", "").length()));
-            scoreTextField.setText(" " + wynik);
-        } else {
-            isAnswerGood.setText("Niestety nie :(");
-        }*/
     }
 
-    public GuiMain() throws Exception {
+    public void sendYourAnswer(int id, String yourAnswer) {
+        Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
+        char[] yourAnswerCharArray = yourAnswer.toCharArray();
+        for (int i = 0; i < yourAnswer.length(); i++) {
+            yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
+        }
+
+        AnswerData dataAnswer = new AnswerData();
+        dataAnswer.setQuestionId(id);
+        dataAnswer.setLastQuestion(questionsCollection.isLastQuestion());
+        dataAnswer.setSelectedAnswers(yourAnswerIntArray);
+        list.add(dataAnswer);
+        try {
+            NetworkRequests.answerData(dataAnswer);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public QuizGui() throws Exception {
         answer1Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -128,50 +133,18 @@ public class GuiMain extends javax.swing.JFrame {
         nextQuestionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                AnswerData dataAnswer = new AnswerData();
-                if (zbiorPytan.isLastQuestion() == false) {
-                    Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
-                    char[] yourAnswerCharArray = yourAnswer.toCharArray();
-                    for (int i = 0; i < yourAnswer.length(); i++) {
-                        yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
-                    }
-                    dataAnswer.setQuestionId(id);
-                    dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
-                    dataAnswer.setSelectedAnswers(yourAnswerIntArray);
-                    lista.add(dataAnswer);
-                    try {
-
-                        NetworkRequests.answerData(dataAnswer);
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
+                endQuizButton.setEnabled(true);
+                if (questionsCollection.isLastQuestion() == false) {
+                    sendYourAnswer(id, yourAnswer);
                     id++;
                     setNextQuestionTexts();
                     enableAnswerButtons();
                     nextQuestionButton.setEnabled(false);
                     answersToCheckCount = 4;
-
-                } else {//TODO: powielenie kodu- do poprawienia?
-                    Integer[] yourAnswerIntArray = new Integer[yourAnswer.length()];
-                    char[] yourAnswerCharArray = yourAnswer.toCharArray();
-                    for (int i = 0; i < yourAnswer.length(); i++) {
-                        yourAnswerIntArray[i] = Integer.parseInt(String.valueOf(yourAnswerCharArray[i]));
-                    }
-
-                    dataAnswer.setQuestionId(id);
-                    dataAnswer.setLastQuestion(zbiorPytan.isLastQuestion());
-                    dataAnswer.setSelectedAnswers(yourAnswerIntArray);
-                    lista.add(dataAnswer);
-                    try {
-                        NetworkRequests.answerData(dataAnswer);
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-
-                    nextQuestionButton.setEnabled(false);
+                } else {
+                    sendYourAnswer(id, yourAnswer);
+                    nextQuestionButton.setVisible(false);
                     gameOverLabel.setVisible(true);
-                    gameOverLabel.setText("KONIEC");
                     disableAnswerButtons();
                 }
                 yourAnswer = "";
@@ -181,15 +154,15 @@ public class GuiMain extends javax.swing.JFrame {
         endQuizButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int opcja = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zakonczyc gre ?", "Uwaga!", JOptionPane.YES_NO_OPTION);
-                if (opcja == 0) {
+                int option = JOptionPane.showConfirmDialog(rootPane, "Are you sure you want to quit?", "Warning!", JOptionPane.YES_NO_OPTION);
+                if (option == 0) {
                     try {
-                        NetworkRequests.answerDataList(lista);
+                        NetworkRequests.answerDataList(list);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                     panel1.setVisible(false);
-
+                    System.exit(0);
                 }
             }
         });
@@ -218,8 +191,8 @@ public class GuiMain extends javax.swing.JFrame {
     }
 
     public static void main(String[] args) throws Exception {
-        JFrame GuiMain = new JFrame("GUI");
-        GuiMain.setContentPane(new GuiMain().panel1);
+        JFrame GuiMain = new JFrame("Quiz");
+        GuiMain.setContentPane(new QuizGui().panel1);
         GuiMain.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         GuiMain.pack();
         GuiMain.setVisible(true);
